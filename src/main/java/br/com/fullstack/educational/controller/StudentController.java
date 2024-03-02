@@ -7,19 +7,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("students")
+@RequestMapping("alunos")
 public class StudentController {
     private final StudentService studentService;
 
-    public StudentController(StudentService studentService){
+    public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
+
     @GetMapping
-    public List<StudentModel> get(){
+    public List<StudentModel> get() {
         return studentService.listAll();
     }
+
     @PostMapping
-    public StudentModel post(@RequestBody StudentModel student) throws Exception{
+    public StudentModel post(@RequestBody StudentModel student) throws Exception {
         return studentService.save(student);
     }
 }

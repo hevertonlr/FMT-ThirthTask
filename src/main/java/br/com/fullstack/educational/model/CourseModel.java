@@ -1,5 +1,7 @@
 package br.com.fullstack.educational.model;
 
+import lombok.AccessLevel;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,23 +11,39 @@ import java.util.List;
 /**
  * Classe Curso com métodos gerados pelo Lombok
  */
-@Getter
+@Data
 public class CourseModel {
     private static Integer nextId = 1;
-    @Getter private static List<CourseModel> courses = new ArrayList<>();
+    @Getter
+    private static List<CourseModel> courses = new ArrayList<>();
 
-    @Getter private Integer id;
-    @Setter private String name;
-    @Setter private String description;
-    @Setter private Integer workload;
+    @Setter(AccessLevel.NONE)
+    private Integer id;
+    private String name;
+    private String description;
+    private Integer workload;
 
-    private static Integer getNextId(){
+    private List<StudentModel> enrolledStudents = new ArrayList<>();
+
+    private static Integer getNextId() {
         return nextId++;
     }
 
-    public static CourseModel insert (CourseModel course){
+    public static CourseModel insert(CourseModel course) {
         course.id = getNextId();
         courses.add(course);
         return course;
+    }
+
+    public static CourseModel findById(Integer id) throws Exception {
+        for (CourseModel course : courses) {
+            if (course.getId().equals(id))
+                return course;
+        }
+        throw new Exception("Curso não encontrado!");
+    }
+
+    public static void enroll(CourseModel course, StudentModel student) {
+        course.getEnrolledStudents().add(student);
     }
 }

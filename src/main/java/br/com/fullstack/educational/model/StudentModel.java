@@ -13,20 +13,32 @@ import java.util.List;
 @Getter
 public class StudentModel {
     private static Integer nextId = 1;
-    @Getter private static List<StudentModel> students = new ArrayList<>();
+    @Getter
+    private static List<StudentModel> students = new ArrayList<>();
 
-    @Getter private Integer id;
-    @Setter private String name;
-    @Setter private LocalDate birthDay;
+    @Getter
+    private Integer id;
+    @Setter
+    private String name;
+    @Setter
+    private LocalDate birthDay;
 
-    private static Integer getNextId(){
+    private static Integer getNextId() {
         return nextId++;
     }
 
-    public static StudentModel insert (StudentModel student){
+    public static StudentModel insert(StudentModel student) {
         student.id = getNextId();
         students.add(student);
         return student;
+    }
+
+    public static StudentModel findById(Integer id) throws Exception {
+        for (StudentModel student : students) {
+            if (student.getId().equals(id))
+                return student;
+        }
+        throw new Exception("Aluno não encontrado!");
     }
 }
 
